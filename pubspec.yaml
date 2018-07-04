@@ -1,11 +1,11 @@
 name: path_to_regexp
-version: 0.1.0
-description: Turns a path such as `/user/:id` into a regular expression.
+version: 0.1.1
+description: Converts a path such as '/user/:id' into a regular expression.
 author: Leon Senft <leonsenft@google.com>
 homepage: https://github.com/leonsenft/path_to_regexp
 
 environment:
-  sdk: ">=2.0.0-dev.66.0 <2.0.0"
+  sdk: ">=2.0.0-dev.63.0 <2.0.0"
 
 dev_dependencies:
   test: ^1.2.0

@@ -1,6 +1,6 @@
 # path\_to\_regexp
 
-Turns a path such as `/user/:id` into a regular expression.
+Converts a path such as `/user/:id` into a regular expression.
 
 ## Matching
 
