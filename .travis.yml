@@ -1,0 +1,13 @@
+language: dart
+
+branches:
+  only:
+  - master
+
+dart:
+  - dev
+
+dart_task:
+  - dartanalyzer: --fatal-warnings .
+  - dartfmt
+  - test
