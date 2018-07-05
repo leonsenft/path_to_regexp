@@ -1,6 +1,7 @@
 # path\_to\_regexp
 
 [![Pub](https://img.shields.io/pub/v/path_to_regexp.svg)](https://pub.dartlang.org/packages/path_to_regexp)
+[![Build Status](https://travis-ci.com/leonsenft/path_to_regexp.svg?branch=master)](https://travis-ci.com/leonsenft/path_to_regexp)
 
 Converts a path such as `/user/:id` into a regular expression.
 
