@@ -2,7 +2,11 @@ language: dart
 
 branches:
   only:
-  - master
+    - master
+
+cache:
+  directories:
+    - $HOME/.pub-cache
 
 dart:
   - dev
