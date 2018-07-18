@@ -87,6 +87,30 @@ final toPath = pathToFunction('/user/:id?');
 toPath({}); // => '/user'
 ```
 
+## Wildcard
+
+The wildcard `'*'` in a path specification matches anything.
+
+```dart
+final regExp = pathToRegExp('/user/*');
+regExp.hasMatch('/user'); // => true
+regExp.hasMatch('/user/12'); // => true
+regExp.hasMatch('/user/alice/bob'); // => true
+```
+
+Unlike a parameter, a wildcard doesn't capture its matching path segment. It
+also behaves like an omitted optional parameter when generating a path.
+
+```dart
+final toPath = pathToFunction('/user/*');
+toPath({}); // => '/user'
+```
+
+While it's possible to define an equivalent path specification using a custom
+parameter, it's more convenient to use a wildcard if capturing the match or
+generating a parameterized path isn't necessary.
+
+
 ## Tokens
 
 `parse()` converts a path specification into a list of tokens, which can be

@@ -4,18 +4,23 @@ import 'token.dart';
 /// The default pattern used for matching parameters.
 const _defaultPattern = '([^/]+?)';
 
-/// The regular expression used to extract parameters from a path specification.
+/// The regular expression used to extract wildcards and parameters.
 ///
 /// Capture groups:
-///   1. An optional leading '/'.
-///   2. The parameter name.
-///   3. An optional pattern.
-///   4. An optional quantifier.
+///   1. A wildcard '*'.
+///   2. An optional leading '/'.
+///   3. The parameter name.
+///   4. An optional pattern.
+///   5. An optional quantifier.
 final _parameterRegExp = RegExp(
-    /* (1) */ '(/)?'
-    /* (2) */ r':(\w+)'
-    /* (3) */ r'(\((?:\\.|[^\\()])+\))?'
-    /* (4) */ r'(\?)?');
+    /* (1) */ r'(\*)'
+    '|'
+    '(?:'
+    /* (2) */ '(/)?'
+    /* (3) */ r':(\w+)'
+    /* (4) */ r'(\((?:\\.|[^\\()])+\))?'
+    /* (5) */ r'(\?)?'
+    ')');
 
 /// The Unicode code point for '/'.
 const _slash = 0x2f;
@@ -32,21 +37,26 @@ List<Token> parse(String path, {List<String> parameters}) {
     if (match.start > start) {
       tokens.add(PathToken(path.substring(start, match.start)));
     }
-    final prefixed = match[1] != null;
-    final name = match[2];
-    final pattern = match[3] != null ? escapeGroup(match[3]) : _defaultPattern;
-    final optional = match[4] != null;
-    final end = match.end;
-    final partial = !prefixed || end < length && path.codeUnitAt(end) != _slash;
-    tokens.add(ParameterToken(
-      name,
-      optional: optional,
-      partial: partial,
-      pattern: pattern,
-      prefixed: prefixed,
-    ));
-    parameters?.add(name);
-    start = end;
+    start = match.end;
+    if (match[1] != null) {
+      tokens.add(WildcardToken());
+    } else {
+      final prefixed = match[2] != null;
+      final name = match[3];
+      final pattern =
+          match[4] != null ? escapeGroup(match[4]) : _defaultPattern;
+      final optional = match[5] != null;
+      final partial =
+          !prefixed || start < length && path.codeUnitAt(start) != _slash;
+      tokens.add(ParameterToken(
+        name,
+        optional: optional,
+        partial: partial,
+        pattern: pattern,
+        prefixed: prefixed,
+      ));
+      parameters?.add(name);
+    }
   }
   if (start < length) {
     tokens.add(PathToken(path.substring(start)));

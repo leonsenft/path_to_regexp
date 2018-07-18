@@ -84,3 +84,12 @@ class PathToken implements Token {
   @override
   String toPattern() => escapePath(value);
 }
+
+/// Corresponds to a wildcard '*' that matches anything.
+class WildcardToken implements Token {
+  @override
+  String toPath(_) => '';
+
+  @override
+  String toPattern() => '.*';
+}
