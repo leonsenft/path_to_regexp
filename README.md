@@ -1,7 +1,7 @@
 # path\_to\_regexp
 
-[![Pub](https://img.shields.io/pub/v/path_to_regexp.svg)](https://pub.dartlang.org/packages/path_to_regexp)
-[![Build Status](https://travis-ci.com/leonsenft/path_to_regexp.svg?branch=master)](https://travis-ci.com/leonsenft/path_to_regexp)
+[![Pub][pub-img]][pub-url]
+[![Travis][travis-img]][travis-url]
 
 Converts a path such as `/user/:id` into a regular expression.
 
@@ -135,3 +135,7 @@ This package is heavily inspired by its JavaScript namesake
 
 [path-to-regexp-demo]: https://path-to-regexp.firebaseapp.com
 [path-to-regexp-js]: https://github.com/pillarjs/path-to-regexp
+[pub-img]: https://img.shields.io/pub/v/path_to_regexp.svg
+[pub-url]: https://pub.dartlang.org/packages/path_to_regexp
+[travis-img]: https://img.shields.io/travis/com/leonsenft/path_to_regexp.svg
+[travis-url]: https://travis-ci.com/leonsenft/path_to_regexp
