@@ -14,17 +14,8 @@ class ParameterToken implements Token {
   /// The parameter name.
   final String name;
 
-  /// Whether the parameter may be omitted from the match.
-  final bool optional;
-
-  /// Whether the parameter is a partial path segment.
-  final bool partial;
-
   /// The regular expression pattern this matches.
   final String pattern;
-
-  /// Whether the parameter is prefixed with a '/'.
-  final bool prefixed;
 
   /// The regular expression compiled from [pattern].
   ///
@@ -32,13 +23,7 @@ class ParameterToken implements Token {
   RegExp _regExp;
 
   /// Creates a parameter token for [name].
-  ParameterToken(
-    this.name, {
-    this.optional: false,
-    this.partial: false,
-    this.pattern: r'([^/]+?)',
-    this.prefixed: true,
-  });
+  ParameterToken(this.name, {this.pattern: r'([^/]+?)'});
 
   @override
   String toPath(Map<String, String> args) {
@@ -49,25 +34,14 @@ class ParameterToken implements Token {
         throw ArgumentError.value('$args', 'args',
             'Expected "$name" to match "$pattern", but got "$value"');
       }
-      return prefixed ? '/$value' : value;
-    } else if (optional) {
-      return partial && prefixed ? '/' : '';
+      return value;
     } else {
       throw ArgumentError.value('$args', 'args', 'Expected key "$name"');
     }
   }
 
   @override
-  String toPattern() {
-    final result = prefixed ? '/$pattern' : pattern;
-    if (!optional) {
-      return result;
-    } else if (partial) {
-      return '$result?';
-    } else {
-      return '(?:$result)?';
-    }
-  }
+  String toPattern() => pattern;
 }
 
 /// Corresponds to a non-parameterized section of a path specification.

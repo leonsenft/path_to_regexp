@@ -47,6 +47,7 @@ void main() {
     tests(
       '/:key',
       tokens: [
+        path('/'),
         parameter('key'),
       ],
       regExp: [
@@ -125,6 +126,7 @@ void main() {
       '/:key',
       prefix: true,
       tokens: [
+        path('/'),
         parameter('key'),
       ],
       regExp: [
@@ -145,6 +147,7 @@ void main() {
       '/:key/',
       prefix: true,
       tokens: [
+        path('/'),
         parameter('key'),
         path('/'),
       ],
@@ -158,59 +161,11 @@ void main() {
     );
   });
 
-  group('optional parameter', () {
-    tests(
-      '/:key?',
-      tokens: [
-        parameter('key', optional: true),
-      ],
-      regExp: [
-        matches('/foo', ['/foo', 'foo'], extracts: {'key': 'foo'}),
-        matches('', ['', null]),
-        mismatches('/foo/bar'),
-        mismatches('/'),
-      ],
-      toPath: [
-        returns(''),
-        returns('/foo', given: {'key': 'foo'}),
-      ],
-    );
-    tests(
-      '/:key?/bar',
-      tokens: [
-        parameter('key', optional: true),
-        path('/bar'),
-      ],
-      regExp: [
-        matches('/bar', ['/bar', null]),
-        matches('/foo/bar', ['/foo/bar', 'foo'], extracts: {'key': 'foo'}),
-      ],
-      toPath: [
-        returns('/bar'),
-        returns('/foo/bar', given: {'key': 'foo'}),
-      ],
-    );
-    tests(
-      '/:key?-bar',
-      tokens: [
-        parameter('key', optional: true, partial: true),
-        path('-bar'),
-      ],
-      regExp: [
-        matches('/-bar', ['/-bar', null]),
-        matches('/foo-bar', ['/foo-bar', 'foo'], extracts: {'key': 'foo'}),
-      ],
-      toPath: [
-        returns('/-bar'),
-        returns('/foo-bar', given: {'key': 'foo'}),
-      ],
-    );
-  });
-
   group('custom parameter', () {
     tests(
       r'/:key(\d+)',
       tokens: [
+        path('/'),
         parameter('key', pattern: r'(\d+)'),
       ],
       regExp: [
@@ -227,6 +182,7 @@ void main() {
       r'/:key(\d+)',
       prefix: true,
       tokens: [
+        path('/'),
         parameter('key', pattern: r'(\d+)'),
       ],
       regExp: [
@@ -241,6 +197,7 @@ void main() {
     tests(
       '/:key(.*)',
       tokens: [
+        path('/'),
         parameter('key', pattern: '(.*)'),
       ],
       regExp: [
@@ -263,6 +220,7 @@ void main() {
     tests(
       '/:key([a-z]+)',
       tokens: [
+        path('/'),
         parameter('key', pattern: '([a-z]+)'),
       ],
       regExp: [
@@ -278,6 +236,7 @@ void main() {
     tests(
       '/:key(foo|bar)',
       tokens: [
+        path('/'),
         parameter('key', pattern: '(foo|bar)'),
       ],
       regExp: [
@@ -310,7 +269,7 @@ void main() {
     tests(
       ':key',
       tokens: [
-        parameter('key', partial: true, prefixed: false),
+        parameter('key'),
       ],
       regExp: [
         matches('foo', ['foo', 'foo'], extracts: {'key': 'foo'}),
@@ -326,7 +285,7 @@ void main() {
       ':key',
       prefix: true,
       tokens: [
-        parameter('key', partial: true, prefixed: false),
+        parameter('key'),
       ],
       regExp: [
         matches('foo', ['foo', 'foo'], extracts: {'key': 'foo'}),
@@ -337,30 +296,15 @@ void main() {
         returns('foo', given: {'key': 'foo'}),
       ],
     );
-    tests(
-      ':key?',
-      tokens: [
-        parameter('key', partial: true, prefixed: false, optional: true)
-      ],
-      regExp: [
-        matches('foo', ['foo', 'foo'], extracts: {'key': 'foo'}),
-        matches('', ['', null]),
-        mismatches('/foo'),
-        mismatches('foo/bar'),
-      ],
-      toPath: [
-        returns(''),
-        returns('foo', given: {'key': 'foo'}),
-        throws(given: {'key': ''}),
-      ],
-    );
   });
 
   group('complex path', () {
     tests(
       '/:foo/:bar',
       tokens: [
+        path('/'),
         parameter('foo'),
+        path('/'),
         parameter('bar'),
       ],
       regExp: [
@@ -377,7 +321,9 @@ void main() {
     tests(
       r'/:remote([\w-.]+)/:user([\w-]+)',
       tokens: [
+        path('/'),
         parameter('remote', pattern: r'([\w-.]+)'),
+        path('/'),
         parameter('user', pattern: r'([\w-]+)'),
       ],
       regExp: [
@@ -403,47 +349,24 @@ void main() {
       ],
     );
     tests(
-      '/:foo?bar',
+      r'/:type(video|audio|text):plus(\+.+)',
       tokens: [
-        parameter('foo', partial: true, optional: true),
-        path('bar'),
+        path('/'),
+        parameter('type', pattern: '(video|audio|text)'),
+        parameter('plus', pattern: r'(\+.+)'),
       ],
       regExp: [
-        matches('/foobar', ['/foobar', 'foo'], extracts: {'foo': 'foo'}),
-        matches('/bar', ['/bar', null]),
-      ],
-      toPath: [
-        returns('/bar'),
-        returns('/foobar', given: {'foo': 'foo'}),
-      ],
-    );
-    tests(
-      r'/:type(video|audio|text):plus(\+.+)?',
-      tokens: [
-        parameter('type', partial: true, pattern: '(video|audio|text)'),
-        parameter(
-          'plus',
-          partial: true,
-          pattern: r'(\+.+)',
-          prefixed: false,
-          optional: true,
-        ),
-      ],
-      regExp: [
-        matches(
-          '/video',
-          ['/video', 'video', null],
-          extracts: {'type': 'video'},
-        ),
         matches(
           '/video+test',
           ['/video+test', 'video', '+test'],
           extracts: {'type': 'video', 'plus': '+test'},
         ),
+        mismatches('/video'),
         mismatches('/video+'),
       ],
       toPath: [
-        returns('/video', given: {'type': 'video'}),
+        returns('/audio+test', given: {'type': 'audio', 'plus': '+test'}),
+        throws(given: {'type': 'video'}),
         throws(given: {'type': 'random'}),
       ],
     );
@@ -514,19 +437,10 @@ RegExpCase matches(
 
 RegExpCase mismatches(String path) => new RegExpCase(path, null, null);
 
-Matcher parameter(
-  String name, {
-  bool optional: false,
-  bool partial: false,
-  String pattern: '([^/]+?)',
-  bool prefixed: true,
-}) =>
+Matcher parameter(String name, {String pattern: '([^/]+?)'}) =>
     const TypeMatcher<ParameterToken>()
         .having((t) => t.name, 'name', name)
-        .having((t) => t.optional, 'optional', optional)
-        .having((t) => t.partial, 'partial', partial)
-        .having((t) => t.pattern, 'pattern', pattern)
-        .having((t) => t.prefixed, 'prefixed', prefixed);
+        .having((t) => t.pattern, 'pattern', pattern);
 
 Matcher path(String value) =>
     const TypeMatcher<PathToken>().having((t) => t.value, 'value', value);

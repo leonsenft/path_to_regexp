@@ -1,3 +1,7 @@
+## 0.2.0
+
+* Removes support for optional parameters.
+
 ## 0.1.2
 
 * Updates SDK constraints to support Dart 2 stable.

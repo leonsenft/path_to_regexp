@@ -28,16 +28,6 @@ regExp.hasMatch('/user/12'); // => true
 regExp.hasMatch('/user/alice'); // => false
 ```
 
-### Optional Parameters
-
-A parameter can be made optional by appending a `?`.
-
-```dart
-final regExp = pathToRegExp(r'/user/:id(\d+)?');
-regExp.hasMatch('/user/12'); // => true
-regExp.hasMatch('/user'); // => true
-```
-
 ### Extracting Parameters
 
 Parameters can be extracted from a path specification during conversion into a
@@ -61,15 +51,6 @@ final match = regExp.matchAsPrefix('/user/12');
 extract(parameters, match); // => {'id': '12'}
 ```
 
-Missing optional arguments are omitted from the results.
-
-```dart
-final parameters = <String>[];
-final regExp = pathToRegExp('/user/:id?', parameters: parameters);
-final match = regExp.matchAsPrefix('/user');
-extract(parameters, match); // => {}
-```
-
 ## Generating
 
 `pathToFunction()` converts a path specification into a function that generates
@@ -78,13 +59,6 @@ matching paths.
 ```dart
 final toPath = pathToFunction('/user/:id');
 toPath({'id': '12'}); // => '/user/12'
-```
-
-Optional parameters may be omitted from the map of arguments.
-
-```dart
-final toPath = pathToFunction('/user/:id?');
-toPath({}); // => '/user'
 ```
 
 ## Tokens
