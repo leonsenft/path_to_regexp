@@ -11,6 +11,9 @@ abstract class Token {
 
 /// Corresponds to a parameter of a path specification.
 class ParameterToken implements Token {
+  /// Creates a parameter token for [name].
+  ParameterToken(this.name, {this.pattern: r'([^/]+?)'});
+
   /// The parameter name.
   final String name;
 
@@ -21,9 +24,6 @@ class ParameterToken implements Token {
   ///
   /// Initialized lazily to validate [toPath] arguments.
   RegExp _regExp;
-
-  /// Creates a parameter token for [name].
-  ParameterToken(this.name, {this.pattern: r'([^/]+?)'});
 
   @override
   String toPath(Map<String, String> args) {
@@ -46,11 +46,11 @@ class ParameterToken implements Token {
 
 /// Corresponds to a non-parameterized section of a path specification.
 class PathToken implements Token {
-  /// A substring of the path specification.
-  final String value;
-
   /// Creates a path token with [value].
   PathToken(this.value);
+
+  /// A substring of the path specification.
+  final String value;
 
   @override
   String toPath(_) => value;

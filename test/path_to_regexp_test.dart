@@ -452,18 +452,18 @@ ToPathCase throws({Map<String, String> given = const {}}) =>
     new ToPathCase(given, null);
 
 class RegExpCase {
+  RegExpCase(this.path, this.groups, this.args);
+
   final Map<String, String> args;
   final List<String> groups;
   final String path;
-
-  RegExpCase(this.path, this.groups, this.args);
 
   bool get matches => groups != null;
 }
 
 class ToPathCase {
+  ToPathCase(this.args, this.path);
+
   final Map<String, String> args;
   final String path;
-
-  ToPathCase(this.args, this.path);
 }
