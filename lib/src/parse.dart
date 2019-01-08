@@ -17,7 +17,6 @@ final _parameterRegExp = RegExp(
 ///
 /// Parameter names are added, in order, to [parameters] if provided.
 List<Token> parse(String path, {List<String> parameters}) {
-  final length = path.length;
   final matches = _parameterRegExp.allMatches(path);
   final tokens = <Token>[];
   var start = 0;
@@ -31,7 +30,7 @@ List<Token> parse(String path, {List<String> parameters}) {
     parameters?.add(name);
     start = match.end;
   }
-  if (start < length) {
+  if (start < path.length) {
     tokens.add(PathToken(path.substring(start)));
   }
   return tokens;

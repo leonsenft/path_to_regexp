@@ -9,10 +9,7 @@ Map<String, String> extract(List<String> parameters, Match match) {
   final length = parameters.length;
   for (var i = 0; i < length; ++i) {
     // Offset the group index by one since the first group is the entire match.
-    final group = match.group(i + 1);
-    if (group != null) {
-      args[parameters[i]] = group;
-    }
+    args[parameters[i]] = match.group(i + 1);
   }
   return args;
 }
