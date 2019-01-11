@@ -12,7 +12,7 @@ abstract class Token {
 /// Corresponds to a parameter of a path specification.
 class ParameterToken implements Token {
   /// Creates a parameter token for [name].
-  ParameterToken(this.name, {this.pattern: r'([^/]+?)'});
+  ParameterToken(this.name, {this.pattern = r'([^/]+?)'});
 
   /// The parameter name.
   final String name;

@@ -10,7 +10,7 @@ import 'token.dart';
 RegExp pathToRegExp(
   String path, {
   List<String> parameters,
-  bool prefix: false,
+  bool prefix = false,
 }) =>
     tokensToRegExp(parse(path, parameters: parameters), prefix: prefix);
 
@@ -19,7 +19,7 @@ RegExp pathToRegExp(
 /// If [prefix] is true, the returned regular expression matches the beginning
 /// of input until a delimiter or end of input. Otherwise it matches the entire
 /// input.
-RegExp tokensToRegExp(List<Token> tokens, {bool prefix: false}) {
+RegExp tokensToRegExp(List<Token> tokens, {bool prefix = false}) {
   final buffer = StringBuffer('^');
   String lastPattern;
   for (final token in tokens) {

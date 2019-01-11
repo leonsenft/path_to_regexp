@@ -421,7 +421,7 @@ void tests(
 }
 
 List<String> _groupsOf(Match match) {
-  return new List<String>.generate(
+  return List<String>.generate(
     match.groupCount + 1,
     (i) => match.group(i),
     growable: false,
@@ -433,11 +433,11 @@ RegExpCase matches(
   List<String> groups, {
   Map<String, String> extracts = const {},
 }) =>
-    new RegExpCase(path, groups, extracts);
+    RegExpCase(path, groups, extracts);
 
-RegExpCase mismatches(String path) => new RegExpCase(path, null, null);
+RegExpCase mismatches(String path) => RegExpCase(path, null, null);
 
-Matcher parameter(String name, {String pattern: '([^/]+?)'}) =>
+Matcher parameter(String name, {String pattern = '([^/]+?)'}) =>
     const TypeMatcher<ParameterToken>()
         .having((t) => t.name, 'name', name)
         .having((t) => t.pattern, 'pattern', pattern);
@@ -446,10 +446,10 @@ Matcher path(String value) =>
     const TypeMatcher<PathToken>().having((t) => t.value, 'value', value);
 
 ToPathCase returns(String path, {Map<String, String> given = const {}}) =>
-    new ToPathCase(given, path);
+    ToPathCase(given, path);
 
 ToPathCase throws({Map<String, String> given = const {}}) =>
-    new ToPathCase(given, null);
+    ToPathCase(given, null);
 
 class RegExpCase {
   RegExpCase(this.path, this.groups, this.args);
