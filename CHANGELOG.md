@@ -1,3 +1,11 @@
+## 0.2.1
+
+* Removed unnecessary code.
+
+* Added an example.
+
+* Included `package:pedantic/analysis_options.yaml`.
+
 ## 0.2.0
 
 * Removed support for optional parameters.
