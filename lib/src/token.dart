@@ -19,16 +19,14 @@ class ParameterToken implements Token {
   final String pattern;
 
   /// The regular expression compiled from [pattern].
-  ///
-  /// Initialized lazily to validate [toPath] arguments.
+  RegExp get regExp => _regExp ??= RegExp('^$pattern\$');
   RegExp _regExp;
 
   @override
   String toPath(Map<String, String> args) {
     if (args.containsKey(name)) {
       final value = args[name];
-      _regExp ??= RegExp('^$pattern\$');
-      if (!_regExp.hasMatch(value)) {
+      if (!regExp.hasMatch(value)) {
         throw ArgumentError.value('$args', 'args',
             'Expected "$name" to match "$pattern", but got "$value"');
       }
