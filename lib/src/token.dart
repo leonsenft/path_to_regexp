@@ -1,5 +1,3 @@
-import 'escape.dart';
-
 /// The base type of all tokens produced by a path specification.
 abstract class Token {
   /// Returns the path representation of this given [args].
@@ -56,5 +54,5 @@ class PathToken implements Token {
   String toPath(_) => value;
 
   @override
-  String toPattern() => escapePath(value);
+  String toPattern() => RegExp.escape(value);
 }

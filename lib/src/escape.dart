@@ -1,9 +1,6 @@
 /// Matches any characters that could prevent a group from capturing.
 final _groupRegExp = RegExp(r'[:=!]');
 
-/// Matches any characters that have special meaning in a regular expression.
-final _pathRegExp = RegExp(r'[.*+?^${}()|[\]\\]');
-
 /// Escapes a single character [match].
 String _escape(Match match) => '\\${match[0]}';
 
@@ -15,9 +12,3 @@ String _escape(Match match) => '\\${match[0]}';
 /// groups.
 String escapeGroup(String group) =>
     group.replaceFirstMapped(_groupRegExp, _escape);
-
-/// Escapes [path] so that it matches literally within a regular expression.
-///
-/// This prevents the use of regular expressions outside of parameters, which
-/// would prohibit generating a path from a path specification.
-String escapePath(String path) => path.replaceAllMapped(_pathRegExp, _escape);
