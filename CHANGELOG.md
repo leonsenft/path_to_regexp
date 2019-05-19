@@ -1,3 +1,5 @@
+## 0.3.0
+
 * Added an option to create case insensitive regular expressions.
 
 * Added a getter named `regExp` to `ParameterToken` for the regular expression
