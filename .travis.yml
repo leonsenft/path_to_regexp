@@ -12,6 +12,12 @@ dart:
   - dev
 
 dart_task:
-  - dartanalyzer: --fatal-warnings .
+  - dartanalyzer: --fatal-warnings --lints .
   - dartfmt
   - test
+
+# Run tests on lowest supported SDK version.
+matrix:
+  include:
+  - dart: 2.3.0
+    dart_task: test
