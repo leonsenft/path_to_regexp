@@ -107,7 +107,7 @@ library.
 This package is heavily inspired by its JavaScript namesake
 [path-to-regexp][path-to-regexp-js].
 
-[path-to-regexp-demo]: https://path-to-regexp.firebaseapp.com
+[path-to-regexp-demo]: https://path-to-regexp.web.app
 [path-to-regexp-js]: https://github.com/pillarjs/path-to-regexp
 [pub-img]: https://img.shields.io/pub/v/path_to_regexp.svg
 [pub-url]: https://pub.dartlang.org/packages/path_to_regexp
