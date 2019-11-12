@@ -25,7 +25,8 @@ RegExp pathToRegExp(
 /// of input until a delimiter or end of input. Otherwise it matches the entire
 /// input.
 ///
-/// The resulting [RegExp] will respect the [caseSensitive] parameter.
+/// The returned regular expression respects [caseSensitive], which is true by
+/// default.
 RegExp tokensToRegExp(
   List<Token> tokens, {
   bool prefix = false,
