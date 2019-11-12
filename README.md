@@ -97,6 +97,17 @@ final regExp = pathToRegExp('/user/:id', prefix: true);
 regExp.hasMatch('/user/12/details'); // => true
 ```
 
+### Case Sensitivity
+
+By default, a regular expression created by `pathToRegExp` or `tokensToRegExp`
+is case sensitive. To create a case insensitive regular expression, set
+`caseSensitive` to false.
+
+```dart
+final regExp = pathToRegExp('/user/:id', caseSensitive: false);
+regExp.hasMatch('/USER/12'); // => true
+```
+
 ## Demo
 
 Try the [path\_to\_regexp\_demo][path-to-regexp-demo] to experiment with this

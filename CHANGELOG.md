@@ -1,4 +1,4 @@
- * Added the ability to generate case-insensitive regular expressions
+* Added an option to create case insensitive regular expressions.
 
 ## 0.2.1
 
