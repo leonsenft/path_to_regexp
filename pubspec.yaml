@@ -5,7 +5,7 @@ author: Leon Senft <leonsenft@google.com>
 homepage: https://github.com/leonsenft/path_to_regexp
 
 environment:
-  sdk: ">=2.0.0 <3.0.0"
+  sdk: ">=2.3.0 <3.0.0"
 
 dev_dependencies:
   # For `package:pedantic/analysis_options.yaml`.

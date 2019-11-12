@@ -3,6 +3,8 @@
 * Added a getter named `regExp` to `ParameterToken` for the regular expression
   used to match arguments.
 
+* Updated lower SDK constraint to 2.3.0.
+
 ## 0.2.1
 
 * Removed unnecessary code.
