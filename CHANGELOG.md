@@ -1,3 +1,5 @@
+ * Added the ability to generate case-insensitive regular expressions
+
 ## 0.2.1
 
 * Removed unnecessary code.

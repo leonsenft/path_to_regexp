@@ -370,12 +370,34 @@ void main() {
         throws(given: {'type': 'random'}),
       ],
     );
+    // Case insensitive path matching.
+    tests(r'/insensitive-token/:foo', caseSensitive: false, tokens: [
+      path('/insensitive-token/'),
+      parameter('foo')
+    ], regExp: [
+      matches(
+        '/insensitive-token/1',
+        ['/insensitive-token/1', '1'],
+        extracts: {'foo': '1'},
+      ),
+      matches(
+        '/INSENSITIVE-TOKEN/1',
+        ['/INSENSITIVE-TOKEN/1', '1'],
+        extracts: {'foo': '1'},
+      )
+    ], toPath: [
+      returns(
+        '/insensitive-token/1',
+        given: {'foo': '1'},
+      ),
+    ]);
   });
 }
 
 void tests(
   String path, {
   bool prefix = false,
+  bool caseSensitive = true,
   List<Matcher> tokens = const [],
   List<RegExpCase> regExp = const [],
   List<ToPathCase> toPath = const [],
@@ -387,7 +409,11 @@ void tests(
       expect(parsedTokens, tokens);
     });
 
-    final parsedRegExp = tokensToRegExp(parsedTokens, prefix: prefix);
+    final parsedRegExp = tokensToRegExp(
+      parsedTokens,
+      prefix: prefix,
+      caseSensitive: caseSensitive,
+    );
     for (final matchCase in regExp) {
       final path = matchCase.path;
       final match = parsedRegExp.matchAsPrefix(path);
