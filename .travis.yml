@@ -19,5 +19,5 @@ dart_task:
 # Run tests on lowest supported SDK version.
 matrix:
   include:
-  - dart: 2.3.0
+  - dart: 2.12.0
     dart_task: test

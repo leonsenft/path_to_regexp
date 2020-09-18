@@ -419,9 +419,8 @@ void tests(
       final match = parsedRegExp.matchAsPrefix(path);
       if (matchCase.matches) {
         test('should match "$path"', () {
-          expect(_groupsOf(match), matchCase.groups);
-        });
-        test('should extract arguments', () {
+          expect(match, isNotNull);
+          expect(_groupsOf(match!), matchCase.groups);
           expect(extract(parameters, match), matchCase.args);
         });
       } else {
@@ -449,7 +448,7 @@ void tests(
 List<String> _groupsOf(Match match) {
   return List<String>.generate(
     match.groupCount + 1,
-    (i) => match.group(i),
+    (i) => match.group(i)!,
     growable: false,
   );
 }
@@ -480,8 +479,8 @@ ToPathCase throws({Map<String, String> given = const {}}) =>
 class RegExpCase {
   RegExpCase(this.path, this.groups, this.args);
 
-  final Map<String, String> args;
-  final List<String> groups;
+  final Map<String, String>? args;
+  final List<String>? groups;
   final String path;
 
   bool get matches => groups != null;
@@ -491,5 +490,5 @@ class ToPathCase {
   ToPathCase(this.args, this.path);
 
   final Map<String, String> args;
-  final String path;
+  final String? path;
 }

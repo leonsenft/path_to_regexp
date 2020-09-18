@@ -13,7 +13,7 @@ void main() {
 
   // Extract parameter arguments from a match.
   final match = regExp.matchAsPrefix('/user/12');
-  print(extract(parameters, match)); // {id: 12}
+  print(extract(parameters, match!)); // {id: 12}
 
   // Create a path function from tokens.
   final toPath = tokensToFunction(tokens);

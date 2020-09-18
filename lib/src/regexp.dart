@@ -9,7 +9,7 @@ import 'token.dart';
 /// [caseSensitive] parameters and the return value.
 RegExp pathToRegExp(
   String path, {
-  List<String> parameters,
+  List<String>? parameters,
   bool prefix = false,
   bool caseSensitive = true,
 }) =>
@@ -33,7 +33,7 @@ RegExp tokensToRegExp(
   bool caseSensitive = true,
 }) {
   final buffer = StringBuffer('^');
-  String lastPattern;
+  String? lastPattern;
   for (final token in tokens) {
     lastPattern = token.toPattern();
     buffer.write(lastPattern);
